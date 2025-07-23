@@ -3,7 +3,10 @@
 {{define "title"}}Добавить транзакцию{{end}}
 
 {{define "main"}}
-   Счёт: <select>
+<form action = "/add_transaction" method = "post">
+   <label for = "account">Счёт:</label>
+   <br>
+    <select name = "account">
         {{range .AccountList}}
             <option>{{.Name}}</option>
         {{else}}
@@ -11,18 +14,33 @@
         {{end}}
     </select>
     <br>
-    Сумма: <input> <select>
-                        <option>Расход</option>
-                        <option>Доход</option>
-                        <option>Перевод</option>
-                    </select>
+    <label for = "amount">Сумма:</label>
     <br>
-    Дата:
-    Категория: <select>
-                {{range .CategoryList}}
-                    <option>{{.Name}}</option>
-                {{else}}
-                    <p>Список пуст</p>
-                {{end}}
-                </select>
+    <input  id = "amount" name = "amount" value = 0.00 style = "text-align: right;">
+        <select>
+            <option>Расход</option>
+            <option>Доход</option>
+            <option>Перевод</option>
+        </select>
+    <br>
+    <label for ="date">Дата:</label>
+    <br>
+    <input type ="date" id = "date" name = "date">
+    <br>
+    <label for = "category">Категория:</label>
+    <br>
+        <select>
+            {{range .CategoryList}}
+                <option>{{.Name}}</option>
+            {{else}}
+                <p>Список пуст</p>
+            {{end}}
+        </select>
+    <br>
+    <label for = "comment"> Комментарий:</label>
+    <br>
+    <textarea name = "comment"></textarea>
+    <br>
+    <button class = "button">Добавить</button><button class = button>Добавить+</button>
+</form>
 {{end}}

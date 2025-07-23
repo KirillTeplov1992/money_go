@@ -2,3 +2,7 @@ a {
     text-decoration: none;
     color: blue;
 }
+
+#amount {
+    text-align: right;
+}
