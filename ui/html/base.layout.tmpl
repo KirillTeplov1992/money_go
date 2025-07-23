@@ -1,0 +1,25 @@
+{{define "base"}}
+<!doctype html>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8'>
+        <title>{{template "title" .}} - Microblog</title>
+        <!-- Ссылка на CSS стили -->
+        <link rel='stylesheet' href='/static/css/main.css'>
+    </head>
+    <body>
+        <div>Домашняя бухгалтерия:
+        <a href="/">Home</a>
+        <a href="/create_account">Добавить счет</a>
+        <a href="/create_category">Добавить категорию</a>
+        <a href="/create_transaction">Добавить транзакцию</a>
+        </div>
+        <hr>
+        <main>
+            {{template "main" .}}
+        </main>
+        <!-- Вызываем шаблон подвала -->
+        {{template "footer" .}}
+    </body>
+</html>
+{{end}}

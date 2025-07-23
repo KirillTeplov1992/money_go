@@ -1,0 +1,23 @@
+{{template "base" .}}
+
+{{define "title"}}Домашняя страница{{end}}
+
+{{define "main"}}
+    {{if .AccountsListWithBalance}}
+    <table>
+        <tr>
+            <th>Счёт</th>
+            <th>Баланс</th>
+        </tr>
+        {{ range .AccountsListWithBalance }}
+        <tr>
+            <td><a href = "/account?id={{.ID}}">{{ .Name }}</a></td>
+            <td>{{ .Amount }} руб.</td>
+        </tr>
+        {{ end }}
+    </table>
+    {{ else }}
+        <p>Добавьте счет</p>
+    {{ end }}
+    <p>Суммарный баланс {{ .TotalBalance.Balance }} руб.</p>
+{{end}}

@@ -1,0 +1,26 @@
+{{template "base" .}}
+
+{{define "title"}}{{.Account.Name}}{{end}}
+
+{{define "main"}}
+    {{if .TransactionList}}
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Дата</th>
+            <th>Категория</th>
+            <th>Сумма</th>
+        </tr>
+        {{ range .TransactionList }}
+        <tr>
+            <td><a href = "/transaction?id={{.ID}}">{{.ID}}</a></td>
+            <td>{{ .Date.Format "02 January 2006" }}</td>
+            <td>{{.Category}}</td>
+            <td>{{.Amount}}</td>
+        </tr>
+        {{ end }}
+    </table>
+    {{else}}
+        <p>Счет пуст</p>
+    {{end}}
+{{end}}

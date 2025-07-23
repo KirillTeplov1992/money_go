@@ -1,0 +1,28 @@
+{{template "base" .}}
+
+{{define "title"}}Добавить транзакцию{{end}}
+
+{{define "main"}}
+   Счёт: <select>
+        {{range .AccountList}}
+            <option>{{.Name}}</option>
+        {{else}}
+            <p>Список пуст</p>
+        {{end}}
+    </select>
+    <br>
+    Сумма: <input> <select>
+                        <option>Расход</option>
+                        <option>Доход</option>
+                        <option>Перевод</option>
+                    </select>
+    <br>
+    Дата:
+    Категория: <select>
+                {{range .CategoryList}}
+                    <option>{{.Name}}</option>
+                {{else}}
+                    <p>Список пуст</p>
+                {{end}}
+                </select>
+{{end}}

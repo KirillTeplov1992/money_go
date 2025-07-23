@@ -1,0 +1,14 @@
+{{template "base" .}}
+
+{{define "title"}}Редактирование заметки{{end}}
+
+{{define "main"}}
+<div class="container">
+<form action = "/update_snippet?id={{ .Snippet.ID }}" method = "post">
+    <textarea class = "text" type = "text" name = "title" id = "title" placeholder = "Заголовок:">{{ .Snippet.Title }}</textarea><br>
+    <textarea class = "text-content" name="content" id = "content" placeholder = "Содержание заметки" >{{ .Snippet.Content }}</textarea><br>
+    <button class = "button">Редактировать</button> 
+</form>
+</div>
+
+{{end}}
