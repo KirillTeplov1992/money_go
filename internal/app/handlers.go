@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 )
@@ -43,4 +44,8 @@ func (app *Application) createTransaction(w http.ResponseWriter, r *http.Request
 		AccountList: accList,
 		CategoryList: catList,
 	})
+}
+
+func (app *Application) getCategories(w http.ResponseWriter, r *http.Request){
+	fmt.Println("Привет от сервера")
 }

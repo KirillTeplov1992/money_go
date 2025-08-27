@@ -16,11 +16,11 @@
     <br>
     <label for = "amount">Сумма:</label>
     <br>
-    <input  id = "amount" name = "amount" value = 0.00 style = "text-align: right;">
-        <select>
-            <option>Расход</option>
-            <option>Доход</option>
-            <option>Перевод</option>
+    <input  id = "amount" type = "number" name = "amount" value = 0.00 style = "text-align: right;">
+        <select id = "type_of_category">
+            <option value = "Расход">Расход</option>
+            <option value = "Доход">Доход</option>
+            <option value = "Перевод">Перевод</option>
         </select>
     <br>
     <label for ="date">Дата:</label>
@@ -29,9 +29,9 @@
     <br>
     <label for = "category">Категория:</label>
     <br>
-        <select>
+        <select id = "category">
             {{range .CategoryList}}
-                <option>{{.Name}}</option>
+                <option value = "{{.Name}}">{{.Name}}</option>
             {{else}}
                 <p>Список пуст</p>
             {{end}}
@@ -41,6 +41,6 @@
     <br>
     <textarea name = "comment"></textarea>
     <br>
-    <button class = "button">Добавить</button><button class = button>Добавить+</button>
+    <button class = "button" name = "action" value = "add">Добавить</button><button class = button name = "action" value = "add+">Добавить+</button>
 </form>
 {{end}}
