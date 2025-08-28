@@ -3,9 +3,9 @@ package models
 import "time"
 
 type Account struct {
-	ID int
-	Name string
-	Is_active bool
+	ID int `json:"id"`
+	Name string `json:"name"`
+	Is_active bool `json:"is_active"`
 }
 
 type AccountData struct{
@@ -26,7 +26,7 @@ type AccountTransaction struct{
 }
 
 type Category struct{
-	ID int
-	Name string
+	ID int `json:"id"`
+	Name string `json:"name"`
 	type_of_category, is_public, Is_active bool
 }

@@ -10,17 +10,20 @@ typeOfCategory.addEventListener('change', function(){
 
     switch (tCategory) {
         case "Доход":
-            console.log("Выбран доход")
+            get_incoms()
             break;
         case "Расход":
-            console.log("Выбран расход")
+            get_expepenses()
             break;
         case "Перевод":
-            console.log("Выбран перевод")
+            get_accounts()
             break;
     }
+});
 
-    /*fetch('http://127.0.0.1:5050/addcategories')
+
+function get_incoms() {
+    fetch('http://127.0.0.1:5050/get_incoms')
         .then(response =>{
             if (!response.ok) {
                 throw new Error('Ошибка сети: ${response.statusText}');
@@ -28,6 +31,51 @@ typeOfCategory.addEventListener('change', function(){
             return response.json();
         })
         .then(data =>{
-            console.log('Данные получены:', data);
-        })*/
-});
+            category.length = 0;
+            data.forEach(item =>{
+                const option = document.createElement('option');
+                option.value = item.id;
+                option.text = item.name;
+                category.add(option);
+            });
+        })
+}
+
+function get_accounts() {
+    fetch('http://127.0.0.1:5050/get_accounts')
+        .then(response =>{
+            if (!response.ok) {
+                throw new Error('Ошибка сети: ${response.statusText}');
+            }
+            return response.json();
+        })
+        .then(data =>{
+            category.length = 0;
+            data.forEach(item =>{
+                const option = document.createElement('option');
+                option.value = item.id;
+                option.text = item.name;
+                category.add(option);
+            });
+        })
+}
+
+function get_expepenses() {
+    fetch('http://127.0.0.1:5050/get_expenses')
+        .then(response =>{
+            if (!response.ok) {
+                throw new Error('Ошибка сети: ${response.statusText}');
+            }
+            return response.json();
+        })
+        .then(data =>{
+            category.length = 0;
+            data.forEach(item =>{
+                const option = document.createElement('option');
+                option.value = item.id;
+                option.text = item.name;
+                category.add(option);
+            });
+        })
+}
+    

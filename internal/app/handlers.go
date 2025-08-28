@@ -1,7 +1,7 @@
 package app
 
 import (
-	"fmt"
+	"encoding/json"
 	"net/http"
 	"strconv"
 )
@@ -36,7 +36,7 @@ func (app *Application) account (w http.ResponseWriter, r *http.Request){
 	})
 }
 
-func (app *Application) createTransaction(w http.ResponseWriter, r *http.Request){
+func (app *Application) createTransaction (w http.ResponseWriter, r *http.Request){
 	accList := app.store.Account().GetAccountsList()
 	catList := app.store.Category().GetExpenses()
 
@@ -46,6 +46,28 @@ func (app *Application) createTransaction(w http.ResponseWriter, r *http.Request
 	})
 }
 
-func (app *Application) getCategories(w http.ResponseWriter, r *http.Request){
-	fmt.Println("Привет от сервера")
+func (app *Application) getIncoms (w http.ResponseWriter, r *http.Request){
+	incomList := app.store.Category().GetIncoms()
+
+	w.Header().Set("incoms list", "application/json")
+
+	json.NewEncoder(w).Encode(incomList)
 }
+
+func (app *Application) getAccounts (w http.ResponseWriter, r *http.Request){
+	accList := app.store.Account().GetAccountsList()
+
+	w.Header().Set("incoms list", "application/json")
+
+	json.NewEncoder(w).Encode(accList)
+}
+
+func (app *Application) getExpenses (w http.ResponseWriter, r *http.Request){
+	expensesList := app.store.Category().GetExpenses()
+
+	w.Header().Set("incoms list", "application/json")
+
+	json.NewEncoder(w).Encode(expensesList)
+}
+
+

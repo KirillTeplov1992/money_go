@@ -130,7 +130,8 @@ func (ar *AcoountRepository) GetAccountName(acc_id int) *models.Account{
 
 func (ar *AcoountRepository) GetAccountsList() []*models.Account{
 	stmt := `
-	SELECT 
+	SELECT
+		id,
 		name
 	FROM
 		accounts`
@@ -144,7 +145,7 @@ func (ar *AcoountRepository) GetAccountsList() []*models.Account{
 
 	for res.Next(){
 		acc := &models.Account{}
-		err = res.Scan(&acc.Name)
+		err = res.Scan(&acc.ID, &acc.Name)
 		if err != nil{
 			panic(err)
 		}

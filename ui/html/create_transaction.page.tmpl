@@ -8,7 +8,7 @@
    <br>
     <select name = "account">
         {{range .AccountList}}
-            <option>{{.Name}}</option>
+            <option value = {{.ID}}>{{.Name}}</option>
         {{else}}
             <p>Список пуст</p>
         {{end}}
@@ -31,7 +31,7 @@
     <br>
         <select id = "category">
             {{range .CategoryList}}
-                <option value = "{{.Name}}">{{.Name}}</option>
+                <option value = "{{.ID}}">{{.Name}}</option>
             {{else}}
                 <p>Список пуст</p>
             {{end}}
