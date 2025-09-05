@@ -30,3 +30,12 @@ type Category struct{
 	Name string `json:"name"`
 	type_of_category, is_public, Is_active bool
 }
+
+type Transaction struct {
+	ID int          `json: "id"`
+	Date time.Time  `json: "date"`
+	AccountID int   `json: "acc_id"`
+	CategoryID int  `json: "acc_id"`
+	Amount float64 `json: "amount"`
+	Comment string  `json: "comment"` 
+}
