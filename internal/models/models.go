@@ -32,10 +32,10 @@ type Category struct{
 }
 
 type Transaction struct {
-	ID int          `json: "id"`
-	Date time.Time  `json: "date"`
-	AccountID int   `json: "acc_id"`
-	CategoryID int  `json: "acc_id"`
-	Amount float64 `json: "amount"`
-	Comment string  `json: "comment"` 
+	ID int          
+	Date time.Time  
+	AccountID int   
+	CategoryID int  
+	Amount float64 
+	Comment string   
 }

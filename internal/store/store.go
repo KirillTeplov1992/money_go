@@ -10,7 +10,7 @@ type Store struct {
 	db *sql.DB
 	accountRepository *AcoountRepository
 	categoryRepository *CategoryRepository
-
+	transactionRepository *TransactionRepository
 }
 
 func New(config *Config) *Store{
@@ -59,5 +59,17 @@ func (s *Store) Category() *CategoryRepository{
 	}
 
 	return s.categoryRepository
+}
+
+func (s *Store) Transaction() *TransactionRepository{
+	if s.transactionRepository != nil{
+		return s.transactionRepository
+	}
+
+	s.transactionRepository = &TransactionRepository{
+		store: s,
+	}
+
+	return s.transactionRepository
 }
 

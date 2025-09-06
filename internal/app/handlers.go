@@ -39,6 +39,8 @@ func (app *Application) account (w http.ResponseWriter, r *http.Request){
 	})
 }
 
+// createTransaction
+// Функция создает окно, в которое вводятся данные о транзакции
 func (app *Application) createTransaction (w http.ResponseWriter, r *http.Request){
 	accList := app.store.Account().GetAccountsList()
 	catList := app.store.Category().GetExpenses()
@@ -73,6 +75,8 @@ func (app *Application) getExpenses (w http.ResponseWriter, r *http.Request){
 	json.NewEncoder(w).Encode(expensesList)
 }
 
+// addTransaction
+// Функция добавляет транзакцию в базу, в зависимости от её типа
 func (app *Application) addTransaction (w http.ResponseWriter, r *http.Request) {
 	action := r.FormValue("action")
 	type_of_category := r.FormValue("type_of_category")
@@ -87,54 +91,86 @@ func (app *Application) addTransaction (w http.ResponseWriter, r *http.Request) 
 		panic(err)
 	}
 
-	cat_id, err := strconv.Atoi(r.FormValue("category"))
-	if err != nil{
-		panic(err)
-	}
-
 	amount, err := strconv.ParseFloat(r.FormValue("amount"), 64)
 	if err != nil{
 		panic(err)
 	}
 
-	//var errList []string
+	if type_of_category != "Перевод" {
+		cat_id, err := strconv.Atoi(r.FormValue("category"))
+		if err != nil{
+			panic(err)
+		}	
 
-	transaction := models.Transaction {
-		Date: date,
-		AccountID: acc_id,
-		CategoryID: cat_id,
-		Amount: amount,
-		Comment: r.FormValue("comment"),
-	}
-
-	if action == "add" {
-		fmt.Println("action", action)
-		fmt.Println("acc id", transaction.AccountID)
-		fmt.Println("amount", transaction.Amount )
-		fmt.Println("type of category", type_of_category)
-		fmt.Println("date", transaction.Date)
-		fmt.Println("cat id", transaction.CategoryID)
-		fmt.Println("comment", transaction.Comment)
-
-		http.Redirect(w, r, fmt.Sprintf("/"), http.StatusSeeOther)
-	}
-
-	if action == "add+" {
-		fmt.Println("action", action)
-		fmt.Println("acc id", transaction.AccountID)
-		fmt.Println("amount", transaction.Amount )
-		fmt.Println("type of category", type_of_category)
-		fmt.Println("date", transaction.Date)
-		fmt.Println("cat id", transaction.CategoryID)
-		fmt.Println("comment", transaction.Comment)
-
-		http.Redirect(w, r, fmt.Sprintf("/create_transaction"), http.StatusSeeOther)
-	}
-
+		if type_of_category == "Расход" {
+			amount = amount*(-1)
+		}
 	
 
+		//var errList []string
+
+		transaction := models.Transaction {
+			Date: date,
+			AccountID: acc_id,
+			CategoryID: cat_id,
+			Amount: amount,
+			Comment: r.FormValue("comment"),
+		}
 	
-	
+
+		if action == "add" {
+			app.store.Transaction().AddTransaction(transaction)
+			http.Redirect(w, r,"/", http.StatusSeeOther)
+		}
+
+		if action == "add+" {
+			app.store.Transaction().AddTransaction(transaction)
+			http.Redirect(w, r, "/create_transaction", http.StatusSeeOther)
+		}
+	} else {
+		first_acc_id := acc_id
+		second_acc_id, err := strconv.Atoi(r.FormValue("category"))
+		if err != nil{
+			panic(err)
+		}
+
+		transactionMinus := models.Transaction {
+			Date: date,
+			AccountID: first_acc_id,
+			CategoryID: 2,
+			Amount: amount*(-1),
+			Comment: r.FormValue("comment"),
+		}
+
+		transactionPlus := models.Transaction {
+			Date: date,
+			AccountID: second_acc_id,
+			CategoryID: 1,
+			Amount: amount,
+			Comment: r.FormValue("comment"),
+		}
+
+		app.store.Transaction().AddTransaction(transactionMinus)
+		app.store.Transaction().AddTransaction(transactionPlus)
+
+		if action == "add"{
+			http.Redirect(w, r, "/", http.StatusSeeOther)
+		}
+
+		if action == "add+"{
+			http.Redirect(w, r, "/create_transaction", http.StatusSeeOther)
+		}
+	}	
+}
+
+func (app *Application) getTransaction (w http.ResponseWriter, r *http.Request){
+	id, err := strconv.Atoi(r.URL.Query().Get("id"))
+	if err != nil || id < 1{
+		http.NotFound(w,r)
+		return
+	}
+
+	fmt.Println(id)
 }
 
 

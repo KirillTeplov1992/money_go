@@ -10,6 +10,7 @@ func (app *Application) configureRouter() {
 	app.router.HandleFunc("/get_accounts", app.getAccounts)
 	app.router.HandleFunc("/get_expenses", app.getExpenses)
 	app.router.HandleFunc("/add_transaction", app.addTransaction)
+	app.router.HandleFunc("/transaction", app.getTransaction)
 	
 
 	//подключаю CSS стили
