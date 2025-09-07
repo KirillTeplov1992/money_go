@@ -14,6 +14,7 @@ type templateData struct {
 	Account *models.Account
 	AccountList []*models.Account
 	CategoryList []*models.Category
+	Transaction *models.Transaction
 	Errors []string
 }
 

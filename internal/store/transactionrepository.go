@@ -31,3 +31,28 @@ func (tr *TransactionRepository) AddTransaction(transaction models.Transaction){
 		panic(err)
 	}
 }
+
+func (tr *TransactionRepository) GetTransaction (id int) (*models.Transaction, error){
+	stmt := `
+	SELECT
+		*
+	FROM
+		transactions
+	WHERE
+		id = ?
+	`
+	row := tr.store.db.QueryRow(stmt, id)
+
+	transaction := &models.Transaction{}
+	err := row.Scan(&transaction.ID,
+					&transaction.Date,
+					&transaction.AccountID,
+					&transaction.CategoryID,
+					&transaction.Amount,
+					&transaction.Comment)
+	if err != nil{
+		panic(err)
+	}
+	
+	return transaction, err
+}

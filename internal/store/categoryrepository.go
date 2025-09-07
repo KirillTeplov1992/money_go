@@ -68,5 +68,24 @@ func (cr *CategoryRepository) GetIncoms() []*models.Category{
 	}
 
 	return categoryList
+}
+
+func (cr *CategoryRepository) GetTypeOfCategory (id int) *models.Category {
+	stmt := `
+	SELECT
+		type_of_category
+	FROM
+		categories
+	WHERE
+		id = ?`
 	
+	row := cr.store.db.QueryRow(stmt, id)
+
+	category := &models.Category{}
+	err := row.Scan(&category.Type_of_category)
+	if err != nil {
+		panic(err)
+	}
+	
+	return category
 }

@@ -2,7 +2,6 @@ package app
 
 import (
 	"encoding/json"
-	"fmt"
 	"money/internal/models"
 	"net/http"
 	"strconv"
@@ -170,7 +169,41 @@ func (app *Application) getTransaction (w http.ResponseWriter, r *http.Request){
 		return
 	}
 
-	fmt.Println(id)
+	transaction, err := app.store.Transaction().GetTransaction(id)
+	if err != nil{
+		panic(err)
+	}
+
+	category := app.store.Category().GetTypeOfCategory(transaction.CategoryID)
+	accList := app.store.Account().GetAccountsList()
+
+	if category.Type_of_category {
+		catList := app.store.Category().GetIncoms()
+		
+		app.render(w, r, "get_transaction.page.tmpl", &templateData{
+		AccountList: accList,
+		CategoryList: catList,
+		Transaction: transaction,
+		})
+	} else {
+		catList := app.store.Category().GetExpenses()
+
+		transaction.Amount = transaction.Amount*(-1)
+	
+		app.render(w, r, "get_transaction.page.tmpl", &templateData{
+		AccountList: accList,
+		CategoryList: catList,
+		Transaction: transaction,
+		})
+	}
+
+	
+
+
+
+
+	
+	
 }
 
 

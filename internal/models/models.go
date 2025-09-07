@@ -28,7 +28,7 @@ type AccountTransaction struct{
 type Category struct{
 	ID int `json:"id"`
 	Name string `json:"name"`
-	type_of_category, is_public, Is_active bool
+	Type_of_category, Is_public, Is_active bool
 }
 
 type Transaction struct {
